@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
 	printf("That is only a %e portion of the universe.\n", part_of_universe);
 
 	// This makes no sense, just a demo of something wierd
-	char nul_byte = '\0';
-	int care_percentage = bugs * nul_byte;
-	printf("Which means you should care %d%%.\n", care_percentage);
+	char nul_byte = '\0';					// Make a character with a special syntax that creates a 'nul byte' character.  This is effectively the number 0.
+	int care_percentage = bugs * nul_byte;	// Produces 0 which demonstrates an ugly hack you find sometimes.
+	printf("Which means you should care %d%%.\n", care_percentage);	// The %% at the end is what allows you to print out a '%' (percent) character.
 
 	return 0;
 }
