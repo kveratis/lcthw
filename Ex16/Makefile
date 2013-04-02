@@ -15,7 +15,6 @@ link: build $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE)
 
 validate: link $(EXECUTABLE)
-	valgrind --track-origins=yes ./$(EXECUTABLE) > validate.log
-
+	valgrind --track-origins=yes --leak-check=full ./$(EXECUTABLE)
 clean:
 	rm -f *.o *.log $(EXECUTABLE)
