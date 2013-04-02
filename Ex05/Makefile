@@ -1,9 +1,9 @@
 CC=clang
 CFLAGS=-c -Werror -Wall -g -fshow-source-location
 LDFLAGS=
-SOURCES=ex4.c
+SOURCES=ex5.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=ex4
+EXECUTABLE=ex5
 
 all: clean validate
 	rm -f *.o
