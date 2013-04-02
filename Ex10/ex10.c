@@ -5,7 +5,7 @@ int main(int argc, char* argv[])
 	int i = 0;
 
 	// go through each string in argv
-	// why am I skipping argv[0]?
+	// why am I skipping argv[0]? - Because argv[0] is always the name of the program running
 	for(i = 1; i < argc; i++)
 	{
 		printf("arg %d: %s\n", i, argv[i]);
