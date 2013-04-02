@@ -5,11 +5,17 @@ SOURCES=ex4.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=ex4
 
-all: $(SOURCES) clean build
+all: clean validate
+	rm -f *.o
+
+build: $(SOURCES)
+	$(CC) $(CFLAGS) $(SOURCES)
+
+link: build $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE)
 
-build:
-	$(CC) $(CFLAGS) $(SOURCES)
+validate: link $(EXECUTABLE)
+	valgrind --track-origins=yes ./$(EXECUTABLE) > validate.log
 
 clean:
 	rm -f *.o $(EXECUTABLE)
