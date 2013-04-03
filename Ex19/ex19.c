@@ -171,26 +171,33 @@ int process_input(Map* game)
 
 	switch(ch)
 	{
-		case -1:
+		case 'q':
+		case 'Q':
 			printf("Giving up? You suck.\n");
 			return 0;
 			break;
 		case 'n':
+		case 'N':
 			game->_(move)(game, NORTH);
 			break;
 		case 's':
+		case 'S':
 			game->_(move)(game, SOUTH);
 			break;
 		case 'e':
+		case 'E':
 			game->_(move)(game, EAST);
 			break;
 		case 'w':
+		case 'W':
 			game->_(move)(game, WEST);
 			break;
 		case 'a':
+		case 'A':
 			game->_(attack)(game, damage);
 			break;
 		case 'l':
+		case 'L':
 			printf("You can go:\n");
 			if(game->location->north) printf("NORTH\n");
 			if(game->location->south) printf("SOUTH\n");
