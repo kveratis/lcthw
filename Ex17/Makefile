@@ -14,7 +14,10 @@ build: $(SOURCES)
 link: build $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE)
 
-validate: link $(EXECUTABLE)
-	valgrind --track-origins=yes --leak-check=full ./$(EXECUTABLE)
+setup: link $(EXECUTABLE)
+	./db-setup.sh
+
+validate: setup $(EXECUTABLE)
+	valgrind --track-origins=yes --leak-check=full ./$(EXECUTABLE) test.dat g 2
 clean:
 	rm -f *.o *.log $(EXECUTABLE)

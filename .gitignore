@@ -1,5 +1,6 @@
 *.o
 *.log
+*.dat
 
 Ex01/ex1
 Ex03/ex3
