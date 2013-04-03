@@ -22,12 +22,12 @@ int Monster_attack(void* self, int damage)
 	if(monster->hit_points > 0)
 	{
 		printf("It is still alive.\n");
-		return 0;
+		return 1;
 	}
 	else
 	{
 		printf("It is dead!\n");
-		return 1;
+		return 0;
 	}
 }
 
@@ -95,13 +95,12 @@ int Room_attack(void* self, int damage)
 
 	if(monster)
 	{
-		monster->_(attack)(monster, damage);
-		return 1;
+		return monster->_(attack)(monster, damage);
 	}
 	else
 	{
 		printf("You flail in the air at nothing. Idiot.\n");
-		return 0;
+		return 1;
 	}
 }
 
@@ -185,13 +184,14 @@ int process_input(Map* game)
 	getchar(); // eat ENTER
 
 	int damage = rand() % 4;
+	int running = 1;
 
 	switch(ch)
 	{
 		case 'q':
 		case 'Q':
 			printf("Giving up? You suck.\n");
-			return 0;
+			running = 0;
 			break;
 		case 'n':
 		case 'N':
@@ -211,7 +211,13 @@ int process_input(Map* game)
 			break;
 		case 'a':
 		case 'A':
-			game->_(attack)(game, damage);
+			// check for win condition (0 - no longer running)
+			running = game->_(attack)(game, damage);
+
+			if(!running)
+			{
+				printf("You won! You killed the minotaur\n");
+			}
 			break;
 		case 'l':
 		case 'L':
@@ -225,7 +231,7 @@ int process_input(Map* game)
 			printf("What?: %d\n", ch);
 	}
 
-	return 1;
+	return running;
 }
 
 int main(int argc, char* argv[])
