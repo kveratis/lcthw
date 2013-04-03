@@ -7,7 +7,7 @@ LIBS=$(LIB_SOURCES:.c=.o)
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=ex19
 
-all: clean validate
+all: clean link
 	rm -f *.o
 
 library: $(LIB_SOURCES)
