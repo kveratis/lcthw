@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS=-c -Werror -Wall -g -fshow-source-location
 LDFLAGS=
-LIB_SOURCES=object.c
+LIB_SOURCES=object.c engine.c
 SOURCES=ex19.c
 LIBS=$(LIB_SOURCES:.c=.o)
 OBJECTS=$(SOURCES:.c=.o)
