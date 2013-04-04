@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-c -Werror -Wall -g -fshow-source-location
+CFLAGS=-c -Werror -Wall -g -fshow-source-location -DNDEBUG
 LDFLAGS=
 SOURCES=ex20.c
 OBJECTS=$(SOURCES:.c=.o)
