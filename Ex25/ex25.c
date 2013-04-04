@@ -5,13 +5,41 @@
 
 #define MAX_DATA 100
 
+int endofline(FILE* ifp, int c)
+{
+	int eol = (c == '\r' || c == '\n');
+	if(c == '\r')
+	{
+		c = getc(ifp);
+		if(c != '\n' && c != EOF)
+		{
+			ungetc(c, ifp);
+		}
+	}
+	return eol;
+}
+
+int get_line(char* buffer, size_t buflen, FILE* fp)
+{
+	char* end = buffer + buflen - 1; // Allow space for null terminator
+	char* dst = buffer;
+	int c;
+	while((c = getc(fp)) != EOF && !endofline(fp, c) && dst < end)
+	{
+		*dst++ = c;
+	}
+	*dst = '\0';
+	return ((c == EOF && dst == buffer) ? EOF : dst - buffer);
+}
+
 int read_string(char** out_string, int max_buffer)
 {
 	*out_string = calloc(1, max_buffer + 1);
 	check_mem(*out_string);
 
-	char* result = fgets(*out_string, max_buffer, stdin);
-	check(result != NULL, "Input error.");
+	int result = get_line(*out_string, max_buffer, stdin);
+	//fgets(*out_string, max_buffer, stdin);
+	check(result != EOF, "Input error.");
 
 	return 0;
 error:
@@ -114,9 +142,9 @@ int main(int argc, char* argv[])
 	check(rc == 0, "Failed age.");
 
 	printf("----- RESULTS -----\n");
-	printf("First Name: %s", first_name);
+	printf("First Name: %s\n", first_name);
 	printf("Initial: '%c'\n", initial);
-	printf("Last name: %s", last_name);
+	printf("Last name: %s\n", last_name);
 	printf("Age: %d\n", age);
 
 	free(first_name);
