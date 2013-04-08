@@ -1,6 +1,8 @@
 *.o
 *.log
 *.dat
+*.a
+*.so
 
 Ex01/ex1
 Ex03/ex3
