@@ -6,7 +6,7 @@ int Shell_exec(Shell template, ...)
 {
 	apr_pool_t* p = NULL;
 	int rc = -1;
-	apr_status_t rv APR_SUCCESS;
+	apr_status_t rv = APR_SUCCESS;
 	va_list argp;
 	const char* key = NULL;
 	const char* arg = NULL;
@@ -81,5 +81,38 @@ Shell CLEANUP_SH = {
 };
 
 Shell GIT_SH = {
-	
+	.dir = "/tmp",
+	.exe = "git",
+	.args = {"git", "clone", "URL", "pkg-build", NULL}
 };
+
+Shell TAR_SH = {
+	.dir = "/tmp/pkg-build",
+	.exe = "tar",
+	.args = {"tar", "-xzf", "FILE", "--strip-components", "1", NULL}
+};
+
+Shell CURL_SH = {
+	.dir = "/tmp",
+	.exe = "curl",
+	.args = {"curl", "-L", "-o", "TARGET", "URL", NULL}
+};
+
+Shell CONFIGURE_SH = {
+	.exe = "./configure",
+	.dir = "/tmp/pkg-build",
+	.args = {"configure", "OPTS", NULL}
+};
+
+Shell MAKE_SH = {
+	.exe = "make",
+	.dir = "/tmp/pkg-build",
+	.args = {"make", "OPTS", NULL}
+};
+
+Shell INSTALL_SH = {
+	.exe = "sudo",
+	.dir = "/tmp/pkg-build",
+	.args = {"sudo", "make", "TARGET", NULL}
+};
+
