@@ -6,6 +6,7 @@ int Shell_exec(Shell template, ...)
 {
 	apr_pool_t* p = NULL;
 	int rc = -1;
+	int replaced_count = 0;
 	apr_status_t rv = APR_SUCCESS;
 	va_list argp;
 	const char* key = NULL;
@@ -27,10 +28,13 @@ int Shell_exec(Shell template, ...)
 			if(strcmp(template.args[i], key) == 0)
 			{
 				template.args[i] = arg;
+				replaced_count++;
 				break; // found it
 			}
 		}
 	}
+
+	check(replaced_count == template.key_count, "Incorrect number of keys replaced");
 
 	rc = Shell_run(p, &template);
 	apr_pool_destroy(p);
@@ -77,42 +81,49 @@ Shell CLEANUP_SH = {
 	.exe = "rm",
 	.dir = "/tmp",
 	.args = {"rm", "-rf", "/tmp/pkg-build", "/tmp/pkg-src.tar.gz",
-		"/tmp/pkg-src.tar.bz2", "/tmp/DEPENDS", NULL}
+		"/tmp/pkg-src.tar.bz2", "/tmp/DEPENDS", NULL},
+	.key_count = 1
 };
 
 Shell GIT_SH = {
 	.dir = "/tmp",
 	.exe = "git",
-	.args = {"git", "clone", "URL", "pkg-build", NULL}
+	.args = {"git", "clone", "URL", "pkg-build", NULL},
+	.key_count = 1
 };
 
 Shell TAR_SH = {
 	.dir = "/tmp/pkg-build",
 	.exe = "tar",
-	.args = {"tar", "-xzf", "FILE", "--strip-components", "1", NULL}
+	.args = {"tar", "-xzf", "FILE", "--strip-components", "1", NULL},
+	.key_count = 1
 };
 
 Shell CURL_SH = {
 	.dir = "/tmp",
 	.exe = "curl",
-	.args = {"curl", "-L", "-o", "TARGET", "URL", NULL}
+	.args = {"curl", "-L", "-o", "TARGET", "URL", NULL},
+	.key_count = 2
 };
 
 Shell CONFIGURE_SH = {
 	.exe = "./configure",
 	.dir = "/tmp/pkg-build",
-	.args = {"configure", "OPTS", NULL}
+	.args = {"configure", "OPTS", NULL},
+	.key_count = 1
 };
 
 Shell MAKE_SH = {
 	.exe = "make",
 	.dir = "/tmp/pkg-build",
-	.args = {"make", "OPTS", NULL}
+	.args = {"make", "OPTS", NULL},
+	.key_count = 1
 };
 
 Shell INSTALL_SH = {
 	.exe = "sudo",
 	.dir = "/tmp/pkg-build",
-	.args = {"sudo", "make", "TARGET", NULL}
+	.args = {"sudo", "make", "TARGET", NULL},
+	.key_count = 1
 };
 
