@@ -2,7 +2,7 @@ CC=clang
 PREFIX?=/usr/local
 CFLAGS=-c -Werror -Wall -g -fshow-source-location -I${PREFIX}/apr/include/apr-1 -I${PREFIX}/apr/include/apr-util-1 -D_LARGEFILE64_SOURCE=1
 LDFLAGS=-L${PREFIX}/apr/lib -lapr-1 -pthread -laprutil-1
-SOURCES=db.c shell.c
+SOURCES=db.c shell.c commands.c
 BSTR_SRC=bstrlib.c
 OBJECTS=$(SOURCES:.c=.o)
 BSTR_OBJ=$(BSTR_SRC:.c=.o)
